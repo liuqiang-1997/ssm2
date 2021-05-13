@@ -27,7 +27,7 @@ public class Msg {
     }
 
     /**
-     * 处理失败
+     * 处理失败master
      * @return 信息
      */
     public static Msg fail(){
