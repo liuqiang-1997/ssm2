@@ -31,7 +31,7 @@ public class EmployeeService {
 
     /**
      *  查询员工名是否可用，通过查询条件在数据库中返回的数值进行判断
-     * @param empName
+     * @param empName String 员工名称
      * @return true:可用; false:不可用
      */
     public boolean checkUser(String empName){
