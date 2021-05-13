@@ -55,6 +55,7 @@ public class MapperTest {
     public void test1(){
         EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
         for (int i = 0;i<1000;i++){
+            // 使用UUID.randomUUID()随机生成账号
             String substring = UUID.randomUUID().toString().substring(0, 5);
             mapper.insertSelective(new Employee(null,substring,"b",substring+"@168.com"));
         }
