@@ -57,6 +57,11 @@ public class EmployeeContraller {
         return Msg.success();
     }
 
+    /**
+     * 修改员工数据
+     * @param employee 被修改的employee对象
+     * @return 反馈信息
+     */
     @RequestMapping(value = "querys/{empId}")
     public Msg saveEmp(Employee employee){
         System.out.println("更新的数据"+ employee);
@@ -76,7 +81,7 @@ public class EmployeeContraller {
 
         return Msg.success().add("emp",employee);
     }
-    
+
 
     /**
      * 查询所有员工（分页）
