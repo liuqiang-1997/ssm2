@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
+<!--     1. 扫描service下的包-->
+    <context:component-scan base-package="com.liuqiang.service"/>
+
+    <!--    2.将所有的业务类注入到Spring-->
+<!--    <bean id="BookServiceImpl" class="com.liuqiang.service">-->
+<!--        <property name="" ref=""/>-->
+<!--    </bean>-->
+
+    <!--    3.声明式事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--        注入数据源-->
+        <property name="dataSource" ref="druidDataSource"/>
+    </bean>
+
+    <!--    4.aop事务支持-->
+    <!--    配置通知-->
+    <tx:advice id="txadvice" transaction-manager="transactionManager">
+        <!--      配置事务参数-->
+        <tx:attributes>
+            <!--            制定在哪种规则的方法上添加事务-->
+            <!--            <tx:method name="add*" propagation="REQUIRED"/>&lt;!&ndash;  以account开头的方法都配置&ndash;&gt;-->
+            <!--            <tx:method name="update*" propagation="REQUIRED"/>-->
+            <!--            <tx:method name="delete*" propagation="REQUIRED"/>-->
+            <tx:method name="*" propagation="REQUIRED"/> <!--所有方法都添加事务-->
+
+        </tx:attributes>
+
+    </tx:advice>
+
+    <!--    配置切入点和切面-->
+    <aop:config>
+        <!--        配置切入点-->
+        <aop:pointcut id="aopc" expression="execution(* com.liuqiang.service.*.*(..))"/>  <!-- BookServiceImpl
+        类下所有方法-->
+        <!--        配置切面-->
+        <aop:advisor advice-ref="txadvice" pointcut-ref="aopc"></aop:advisor>
+        <!--        将 txadvice 的事务通知设置到 aopc 下的方法上，完成切面-->
+    </aop:config>
+
+<!--    <jdbc:embedded-database id="dataSource"/>-->
+</beans>

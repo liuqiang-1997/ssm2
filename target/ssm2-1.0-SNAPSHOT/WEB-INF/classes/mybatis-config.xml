@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--                核心配置文件-->
+
+<configuration>
+    <!--      应用外部配置文件-->
+    <properties resource="jdbc.properties"/>
+
+    <!--    引入日志-->
+    <settings>
+        <!--        标准日志工厂实现-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--         配置数据库驼峰列名-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+    </settings>
+
+    <!--       给实体类起别名-->
+    <typeAliases>
+        <package name="com.liuqiang.pojo"/>
+    </typeAliases>
+
+<!--    引入分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页参数合理化  -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="url" value="${prop.url}"></property>
+                <property name="driver" value="${prop.driverClassName}"></property>
+                <property name="username" value="${prop.username}"></property>
+                <property name="password" value="${prop.password}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+
+        <package name="com.liuqiang.dao"/>
+    </mappers>
+
+</configuration>

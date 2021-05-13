@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<!--    1. 关联数据库文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+<!--    2. 数据库连接池-->
+    <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${prop.driverClassName}"/>
+        <property name="username" value="${prop.username}"/>
+        <property name="url" value="${prop.url}"/>
+        <property name="password" value="${prop.password}"/>
+    </bean>
+<!--    3. sqlSessionFactory,配置和mybatis整合-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="druidDataSource"/>
+        <!--    绑定mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--    指定mybatis.mapper文件位置    -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+<!--    4. 配置dao接口扫描包，动态实现Dao接口注入Spring容器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<!--         扫描dao包-->
+        <property name="basePackage" value="com.liuqiang.dao"/>
+<!--         注入sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+<!--    5. 配置一个可执行批量的sqlSession-->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+        <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    </bean>
+</beans>
