@@ -4,6 +4,9 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.Pattern;
 
+/**
+ * 员工实体类
+ */
 public class Employee {
     /**
      *
