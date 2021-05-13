@@ -15,6 +15,10 @@ public class Msg {
     // 用户返回给浏览器数据
     private Map<String,Object> extend = new HashMap<String, Object>();
 
+    /**
+     * 处理成功
+     * @return 信息
+     */
     public static Msg success(){
         Msg result = new Msg();
         result.setCode(100);
@@ -22,6 +26,10 @@ public class Msg {
         return result;
     }
 
+    /**
+     * 处理失败
+     * @return 信息
+     */
     public static Msg fail(){
         Msg result = new Msg();
         result.setCode(200);
