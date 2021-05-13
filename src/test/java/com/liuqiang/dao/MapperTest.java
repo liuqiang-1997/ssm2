@@ -34,17 +34,17 @@ public class MapperTest {
      */
     @Test
     public void test(){
-//        // 创建Spring容器
-//        ApplicationContext applicationContext =  new ClassPathXmlApplicationContext("applicationContext.xml");
-////        // 获取mapper
-//        DepartmentMapper bean = applicationContext.getBean(DepartmentMapper.class);
-//        System.out.println(bean);
-//        System.out.println("dept-->"+employeeMapper);
-//        List<Employee> employees = employeeMapper.selectByExampleWithDept(new EmployeeExample());
-//        System.out.println(employees);
-//        int insert = employeeMapper.insert(new Employee(null, "沃尔德", "b", "231@qq.com"));
-//        int insert = employeeMapper.insert(new Employee(null, "杜富国", "g", "987@126.com", 2));
-//        System.out.println(insert);
+        // 创建Spring容器
+        ApplicationContext applicationContext =  new ClassPathXmlApplicationContext("applicationContext.xml");
+//        // 获取mapper
+        DepartmentMapper bean = applicationContext.getBean(DepartmentMapper.class);
+        System.out.println(bean);
+        System.out.println("dept-->"+employeeMapper);
+        List<Employee> employees = employeeMapper.selectByExampleWithDept(new EmployeeExample());
+        System.out.println(employees);
+        int insert = employeeMapper.insert(new Employee(null, "沃尔德", "b", "231@qq.com"));
+        int insert1 = employeeMapper.insert(new Employee(null, "杜富国", "g", "987@126.com", 2));
+        System.out.println(insert);
 
     }
 
